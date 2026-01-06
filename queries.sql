@@ -30,3 +30,39 @@ FROM location l
 JOIN client c ON l.id_client = c.id_client
 JOIN vehicule v ON l.id_vehicule = v.id_vehicule
 WHERE l.date_fin IS NULL;
+
+-- =========================================================
+-- 2. AGRÉGATIONS (COUNT, AVG, MAX, HAVING)
+-- =========================================================
+
+-- 2.1 Nombre total de véhicules par statut
+SELECT statut, COUNT(*) AS nombre_vehicules
+FROM vehicule
+GROUP BY statut;
+
+-- 2.2 Autonomie moyenne des véhicules
+SELECT AVG(autonomie) AS autonomie_moyenne
+FROM vehicule;
+
+-- 2.3 Montant maximal payé pour une location
+SELECT MAX(montant_paiement) AS paiement_max
+FROM paiement;
+
+-- 2.4 Chiffre d'affaires généré par Modèle de véhicule (Trié par rentabilité)
+-- Jointure complexe à 4 tables pour lier le Type au Paiement
+SELECT tv.marque, tv.modele, SUM(p.montant_paiement) AS total_recettes
+FROM type_vehicule tv
+JOIN vehicule v ON tv.id_type = v.id_type
+JOIN location l ON v.id_vehicule = l.id_vehicule
+JOIN paiement p ON l.id_location = p.id_location
+GROUP BY tv.marque, tv.modele
+ORDER BY total_recettes DESC;
+
+-- 2.5 Clients VIP (ceux qui ont dépensé plus de 100€ au total)
+-- Utilisation de HAVING pour filtrer après l'agrégation
+SELECT c.nom, c.prenom, SUM(p.montant_paiement) as total_depense
+FROM client c
+JOIN location l ON c.id_client = l.id_client
+JOIN paiement p ON l.id_location = p.id_location
+GROUP BY c.id_client, c.nom, c.prenom
+HAVING SUM(p.montant_paiement) > 100;
