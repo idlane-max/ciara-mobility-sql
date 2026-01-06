@@ -94,3 +94,25 @@ WHERE montant_paiement > (
     SELECT AVG(montant_paiement)
     FROM paiement
 );
+
+-- =========================================================
+-- 4. VUES (Simplification de l'accès aux données)
+-- =========================================================
+
+-- 4.1 Vue des véhicules avec leurs informations complètes (Marque, Modèle, Prix)
+CREATE OR REPLACE VIEW vue_vehicules_complets AS
+SELECT v.id_vehicule, v.matricule, v.statut,
+       tv.marque, tv.modele, tv.prix_minute, tv.energie
+FROM vehicule v
+JOIN type_vehicule tv ON v.id_type = tv.id_type;
+
+-- 4.2 Vue des locations avec détails clients et véhicules
+CREATE OR REPLACE VIEW vue_locations_details AS
+SELECT l.id_location, c.nom, c.prenom, v.matricule,
+       l.date_debut, l.date_fin, l.statut
+FROM location l
+JOIN client c ON l.id_client = c.id_client
+JOIN vehicule v ON l.id_vehicule = v.id_vehicule;
+
+
+SELECT * FROM vue_vehicules_complets LIMIT 5;
