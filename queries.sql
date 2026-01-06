@@ -66,3 +66,31 @@ JOIN location l ON c.id_client = l.id_client
 JOIN paiement p ON l.id_location = p.id_location
 GROUP BY c.id_client, c.nom, c.prenom
 HAVING SUM(p.montant_paiement) > 100;
+
+-- =========================================================
+-- 3. SOUS-REQUÊTES
+-- =========================================================
+
+-- 3.1 Clients ayant effectué au moins une réservation
+SELECT nom, prenom
+FROM client
+WHERE id_client IN (
+    SELECT id_client
+    FROM reservation
+);
+
+-- 3.2 Véhicules n'ayant jamais été loués
+SELECT id_vehicule, matricule
+FROM vehicule
+WHERE id_vehicule NOT IN (
+    SELECT id_vehicule
+    FROM location
+);
+
+-- 3.3 Locations dont le montant payé est supérieur à la moyenne
+SELECT *
+FROM paiement
+WHERE montant_paiement > (
+    SELECT AVG(montant_paiement)
+    FROM paiement
+);
