@@ -89,11 +89,14 @@ Le schéma respecte strictement les contraintes pour garantir la qualité des do
 ## 📂 Structure du dépôt GitHub 
 
 📦 ciara-mobility-sql
- ┣ 📄 README.md             <-- Documentation du projet (ce fichier)
- ┣ 📄 create_tables.sql          <-- Script de création de la structure et insertion des données
- ┣ 📄 queries.sql                     <-- Script contenant les 10+ requêtes, vues, triggers et fonctions
- ┣ 📁 docs                                   <-- Dossier de documentation
- ┃   ┣ 📄 MCD-MLD-Dictionnaire-de-Donnees.pdf      <-- Modèle Conceptuel de Données, Modèle Logique de Données et Dictionnaire de données
+ ┣ 📄 README.md            <-- Documentation du projet (ce fichier)
+ ┣ 📄 create_tables.sql         <-- Script de création de la structure et insertion des données
+ ┣ 📄 queries.sql                    <-- Script contenant les 10+ requêtes, vues, triggers et fonctions
+ ┣ 📄 data_import.sql                    <-- Ton script pour l'importation du fichier csv
+ ┣ 📁data                                   <-- Dossier de donnée
+ ┣    ┣ 📄 vehicules_cIara_2025.csv              <-- Le fichier CSV source
+ ┣ 📁 docs                                           <-- Dossier de documentation
+ ┃   ┣ 📄 MCD-MLD-Dictionnaire-de-Donnees.pdf            <-- Modèle Conceptuel de Données, Modèle Logique de Données et Dictionnaire de données
 
 ---
 
